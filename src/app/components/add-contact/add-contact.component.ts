@@ -15,6 +15,8 @@ import { ContactBookService } from 'src/app/services/contact-book.service';
   styleUrls: ['./add-contact.component.scss'],
 })
 export class AddContactComponent implements OnInit {
+  readonly today = new Date();
+
   firstNameFormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(3),
@@ -33,10 +35,7 @@ export class AddContactComponent implements OnInit {
     pictureUrl: this.pictureUrlFormControl,
   });
 
-  constructor(
-    private _contactBookService: ContactBookService,
-    private _snackBar: MatSnackBar
-  ) {}
+  constructor(private _contactBookService: ContactBookService) {}
 
   ngOnInit(): void {}
 
@@ -49,10 +48,5 @@ export class AddContactComponent implements OnInit {
     };
     this._contactBookService.addContact(newContact);
     this.newContactFormGroup.reset();
-    this.openSnackBar('Success', 'OK');
-  }
-
-  openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, { duration: 2000 });
   }
 }

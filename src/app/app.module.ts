@@ -17,6 +17,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { EditContactComponent } from './components/edit-contact/edit-contact.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
     ContactDetailComponent,
     AddContactComponent,
     ConfirmationDialogComponent,
+    EditContactComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +43,7 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
     ReactiveFormsModule,
     MatSnackBarModule,
     MatTableModule,
+    MatDialogModule,
   ],
   providers: [MatDatepickerModule],
   bootstrap: [AppComponent],
