@@ -1,21 +1,24 @@
 <div>
-    <form class="add-contact-form">
+    <form class="add-contact-form" (submit)="submitNewContact();$event.preventDefault()">
         <mat-form-field appearance="fill">
             <mat-label>Name</mat-label>
-            <input matInput>
+            <input [formControl]="firstNameFormControl" matInput>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Surname</mat-label>
-            <input matInput>
+            <input [formControl]="lastNameFormControl" matInput>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Date of birth</mat-label>
-            <input matInput>
+            <input [formControl]="birthdayFormControl" matInput [matDatepicker]="picker">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Picture Url</mat-label>
-            <input matInput>
+            <input [formControl]="pictureUrlFormControl" matInput>
         </mat-form-field>
-        <button mat-raised-button color="primary">Submit</button>
+        <button [disabled]="newContactFormGroup.invalid" mat-raised-button color="primary">Submit</button>
     </form>
 </div>

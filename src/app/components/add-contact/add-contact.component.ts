@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ContactEntity } from 'src/app/models/contactEntity';
+import { ContactBookService } from 'src/app/services/contact-book.service';
 
 @Component({
   selector: 'app-add-contact',
@@ -7,9 +15,44 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./add-contact.component.scss'],
 })
 export class AddContactComponent implements OnInit {
-  nameFormControl = new FormControl('', []);
+  firstNameFormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(3),
+  ]);
+  lastNameFormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(3),
+  ]);
+  birthdayFormControl = new FormControl('', [Validators.required]);
+  pictureUrlFormControl = new FormControl('', []);
 
-  constructor() {}
+  newContactFormGroup = new FormGroup({
+    firstName: this.firstNameFormControl,
+    lastName: this.lastNameFormControl,
+    birthday: this.birthdayFormControl,
+    pictureUrl: this.pictureUrlFormControl,
+  });
+
+  constructor(
+    private _contactBookService: ContactBookService,
+    private _snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {}
+
+  submitNewContact() {
+    const newContact: Omit<ContactEntity, 'id'> = {
+      firstName: this.newContactFormGroup.value.firstName,
+      lastName: this.newContactFormGroup.value.lastName,
+      birthday: this.newContactFormGroup.value.birthday,
+      pictureUrl: this.newContactFormGroup.value.pictureUrl,
+    };
+    this._contactBookService.addContact(newContact);
+    this.newContactFormGroup.reset();
+    this.openSnackBar('Success', 'OK');
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, { duration: 2000 });
+  }
 }

@@ -1,6 +1,7 @@
 export interface ContactEntity {
-  name: string;
-  surname: string;
+  id: string;
+  firstName: string;
+  lastName: string;
   birthday: Date;
   pictureUrl: string;
 }
