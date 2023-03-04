@@ -1,0 +1,24 @@
+w nawiązaniu do dzisiejszego spotkania przeszyłam zadanko rekrutacyjne. Proszę daj znać do kiedy będziesz w stanie je wykonać.
+
+Napisz aplikację, która będzie służyła do zarządzania książką kontaktów.
+Na kontakt składa się:
+- imię - tekst
+- nazwisko - tekst
+- data urodzenia - data urodzenia
+- zdjęcie - ścieżka do obrazu
+
+Zadbaj aby aplikacja pozwalała na:
+- dodawać nowe kontakty
+- edytować istniejące kontakty
+- usuwać kontakty
+- wyszukiwać po imieniu oraz nazwisku
+
+Utworzone kontakty przechowaj w serwisie.
+Zadbaj aby formularz dodawania/edycji znalazł się pod osobnym routingiem.
+Do pobierania danych do edycji kontaktu wykorzystaj resolver.
+
+Opcjonalnie zamiast przechowywać dane w serwisie można skorzystać z local storage bądź napisać prostu backend ale nie jest to wymagane.
+
+Zadanie wykonaj korzystając z frameworka Angular, wykorzsytaj bibliotekę Angular Material.
+Jeżeli chcesz zastosować jakieś dodatkowe biblioteki to już wedle uznania.
+Prześlij je proszę jako link do repozytorium na github.
