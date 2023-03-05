@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { ContactEntity } from 'src/app/models/contactEntity';
 import { ContactBookService } from 'src/app/services/contact-book.service';
 
@@ -14,7 +15,7 @@ import { ContactBookService } from 'src/app/services/contact-book.service';
   templateUrl: './add-contact.component.html',
   styleUrls: ['./add-contact.component.scss'],
 })
-export class AddContactComponent implements OnInit {
+export class AddContactComponent {
   readonly today = new Date();
 
   firstNameFormControl = new FormControl('', [
@@ -35,9 +36,10 @@ export class AddContactComponent implements OnInit {
     pictureUrl: this.pictureUrlFormControl,
   });
 
-  constructor(private _contactBookService: ContactBookService) {}
-
-  ngOnInit(): void {}
+  constructor(
+    private _contactBookService: ContactBookService,
+    private route: Router
+  ) {}
 
   submitNewContact() {
     const newContact: Omit<ContactEntity, 'id'> = {
@@ -48,5 +50,9 @@ export class AddContactComponent implements OnInit {
     };
     this._contactBookService.addContact(newContact);
     this.newContactFormGroup.reset();
+  }
+
+  navigateToDashboardView() {
+    this.route.navigateByUrl('dashboard');
   }
 }

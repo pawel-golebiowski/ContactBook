@@ -18,7 +18,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { EditContactComponent } from './components/edit-contact/edit-contact.component';
+import { ContactFormComponent } from './components/contact-form/contact-form.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import { EditContactComponent } from './components/edit-contact/edit-contact.com
     ContactDetailComponent,
     AddContactComponent,
     ConfirmationDialogComponent,
-    EditContactComponent,
+    ContactFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,6 +45,7 @@ import { EditContactComponent } from './components/edit-contact/edit-contact.com
     MatSnackBarModule,
     MatTableModule,
     MatDialogModule,
+    MatMenuModule,
   ],
   providers: [MatDatepickerModule],
   bootstrap: [AppComponent],

@@ -1,21 +1,18 @@
-<div class="full-size">
+<div>
   <p>
     <mat-toolbar color="primary">
-      <button mat-icon-button>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>menu</mat-icon>
       </button>
       <span class="margin-left-1-rem">THTG Client Book</span>
-
-      <a class="_margin-left-1-rem" routerLink="/dashboard"><button mat-raised-button>navigate to dashboard</button></a>
-      <a class="_margin-left-1-rem" routerLink="/add-contact">
-        <button mat-raised-button>
-          navigate to add contact
-        </button>
-      </a>
-
     </mat-toolbar>
   </p>
-
+  <mat-menu #menu="matMenu">
+    <button (click)="navigateToDashboardView()" mat-menu-item>Dashboard</button>
+    <button (click)="navigateToAddContactView()" mat-menu-item>
+      Add Contact
+    </button>
+  </mat-menu>
   <div class="outlet-offset">
     <router-outlet></router-outlet>
   </div>

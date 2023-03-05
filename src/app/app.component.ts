@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ContactBookService } from './services/contact-book.service';
 
 @Component({
@@ -7,11 +8,20 @@ import { ContactBookService } from './services/contact-book.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'clientTHTG';
-
-  constructor(private _contactBookService: ContactBookService) {}
+  constructor(
+    private _contactBookService: ContactBookService,
+    private route: Router
+  ) {}
 
   ngOnInit(): void {
     this._contactBookService.getContacts();
+  }
+
+  navigateToDashboardView() {
+    this.route.navigateByUrl('dashboard');
+  }
+
+  navigateToAddContactView() {
+    this.route.navigateByUrl('add-contact');
   }
 }

@@ -12,3 +12,13 @@
   width: 3rem;
   height: 3rem;
 }
+
+.search-field:not(:last-child) {
+  margin-right: 1rem;
+}
+
+.table-options-toolbar {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0rem;
+}

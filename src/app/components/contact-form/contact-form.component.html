@@ -1,18 +1,18 @@
 <div>
-    <form class="add-contact-form" (submit)="submitContact();$event.preventDefault()">
+    <form class="contact-form" (submit)="submitContact();$event.preventDefault()">
         <mat-form-field appearance="fill">
             <mat-label>First Name</mat-label>
-            <input [formControl]="firstNameFormControl" matInput>
+            <input #firstName [formControl]="firstNameFormControl" matInput>
             <mat-error>First name is too short</mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Last Name</mat-label>
-            <input [formControl]="lastNameFormControl" matInput>
+            <input #lastName [formControl]="lastNameFormControl" matInput>
             <mat-error>Last name is too short</mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Date of birth</mat-label>
-            <input [max]="today" [formControl]="birthdayFormControl" matInput [matDatepicker]="picker">
+            <input #birthday [max]="today" [formControl]="birthdayFormControl" matInput [matDatepicker]="picker">
             <mat-hint>MM/DD/YYYY</mat-hint>
             <mat-error>Invalid date of birth</mat-error>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -20,9 +20,8 @@
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Picture Url</mat-label>
-            <input [formControl]="pictureUrlFormControl" matInput>
+            <input #pictureUrl [formControl]="pictureUrlFormControl" matInput>
             <mat-error>Invalid url</mat-error>
-
         </mat-form-field>
         <button [disabled]="newContactFormGroup.invalid" mat-raised-button color="primary">Submit</button>
     </form>

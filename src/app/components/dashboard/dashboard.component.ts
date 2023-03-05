@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ContactEntity } from 'src/app/models/contactEntity';
 import { ContactBookService } from 'src/app/services/contact-book.service';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
@@ -11,8 +13,17 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource<ContactEntity>([]);
+  contactListRef: ContactEntity[] = [];
+
+  firstNameFilterFormControl = new FormControl('', []);
+  lastNameFilterFormControl = new FormControl('', []);
+  filterFormGroup: FormGroup;
+
+  subscribtion = new Subscription();
+
+  firstContactsArrival = true;
 
   readonly displayedColumns: string[] = [
     'firstName',
@@ -24,20 +35,35 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private _contactBookService: ContactBookService,
+    private fb: FormBuilder,
     private route: Router,
     public dialog: MatDialog
-  ) {}
+  ) {
+    this.filterFormGroup = this.fb.group({
+      firstNameFilter: this.firstNameFilterFormControl,
+      lastNameFilter: this.lastNameFilterFormControl,
+    });
+  }
 
   ngOnInit(): void {
+    this.initFilterFormGroup();
     this._contactBookService.contactList$.subscribe(
       (contacts: ContactEntity[]) => {
-        this.dataSource.data = contacts;
+        this.contactListRef = contacts;
+        if (this.firstContactsArrival) {
+          this.dataSource.data = this.contactListRef;
+          this.firstContactsArrival = false;
+        }
       }
     );
   }
 
   navigateToContactDetails(id: string) {
     this.route.navigateByUrl('detail/' + id);
+  }
+
+  navigateToNewContactView() {
+    this.route.navigateByUrl('add-contact');
   }
 
   confirmToDelete(id: string): void {
@@ -53,5 +79,23 @@ export class DashboardComponent implements OnInit {
         this._contactBookService.deleteContact(id);
       }
     });
+  }
+
+  initFilterFormGroup() {
+    this.subscribtion.add(
+      this.filterFormGroup.valueChanges.subscribe(() => {
+        this.dataSource.data = this.contactListRef
+          .filter((contact) =>
+            contact.firstName.includes(this.firstNameFilterFormControl.value)
+          )
+          .filter((contact) =>
+            contact.lastName.includes(this.lastNameFilterFormControl.value)
+          );
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscribtion.unsubscribe();
   }
 }
