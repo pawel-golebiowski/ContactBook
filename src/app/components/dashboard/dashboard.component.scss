@@ -22,3 +22,40 @@
   justify-content: space-between;
   margin: 1rem 0rem;
 }
+
+.navigation-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.action-button-wrapper {
+  visibility: hidden;
+}
+
+mat-row:hover > mat-cell > .action-button-wrapper {
+  visibility: visible;
+}
+
+mat-row:hover {
+  background-color: #606060;
+}
+
+.no-data-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #424242;
+}
+
+.no-data-found-img {
+  max-width: 20vh;
+  max-height: 30vh;
+}
+
+.picture-column {
+  max-width: 7rem;
+}
+
+.picture-cell {
+  margin: 0.25rem 0;
+}

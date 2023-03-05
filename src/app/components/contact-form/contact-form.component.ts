@@ -2,6 +2,7 @@ import {
   Component,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
 } from '@angular/core';
@@ -12,6 +13,7 @@ import {
   FormBuilder,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ContactEntity } from 'src/app/models/contactEntity';
 import { ContactBookService } from 'src/app/services/contact-book.service';
 
@@ -20,10 +22,13 @@ import { ContactBookService } from 'src/app/services/contact-book.service';
   templateUrl: './contact-form.component.html',
   styleUrls: ['./contact-form.component.scss'],
 })
-export class ContactFormComponent implements OnInit, OnChanges {
+export class ContactFormComponent implements OnInit, OnChanges, OnDestroy {
   @Input() contactToEdit: ContactEntity | null = null;
-  readonly today = new Date();
   readonly urlRegex = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
+  readonly today = new Date();
+
+  subscription = new Subscription();
+  isModified = false;
 
   firstNameFormControl = new FormControl('', [
     Validators.required,
@@ -66,7 +71,13 @@ export class ContactFormComponent implements OnInit, OnChanges {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.subscription.add(
+      this.newContactFormGroup.valueChanges.subscribe(
+        () => (this.isModified = true)
+      )
+    );
+  }
 
   submitContact() {
     const newContact: Omit<ContactEntity, 'id'> = {
@@ -84,5 +95,9 @@ export class ContactFormComponent implements OnInit, OnChanges {
       );
     this.newContactFormGroup.reset();
     this.route.navigateByUrl('dashboard');
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

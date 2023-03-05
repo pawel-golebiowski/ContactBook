@@ -22,14 +22,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
   filterFormGroup: FormGroup;
 
   subscribtion = new Subscription();
-
   firstContactsArrival = true;
 
   readonly displayedColumns: string[] = [
+    'pictureUrl',
     'firstName',
     'lastName',
     'birthday',
-    'pictureUrl',
     'actions',
   ];
 
@@ -47,14 +46,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initFilterFormGroup();
-    this._contactBookService.contactList$.subscribe(
-      (contacts: ContactEntity[]) => {
-        this.contactListRef = contacts;
-        if (this.firstContactsArrival) {
-          this.dataSource.data = this.contactListRef;
-          this.firstContactsArrival = false;
+    this.subscribtion.add(
+      this._contactBookService.contactList$.subscribe(
+        (contacts: ContactEntity[]) => {
+          this.contactListRef = contacts;
+          if (this.firstContactsArrival) {
+            this.dataSource.data = this.contactListRef;
+            this.firstContactsArrival = false;
+          }
         }
-      }
+      )
     );
   }
 
@@ -74,11 +75,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this._contactBookService.deleteContact(id);
-      }
-    });
+    this.subscribtion.add(
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this._contactBookService.deleteContact(id);
+        }
+      })
+    );
   }
 
   initFilterFormGroup() {

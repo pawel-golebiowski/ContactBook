@@ -23,6 +23,8 @@
             <input #pictureUrl [formControl]="pictureUrlFormControl" matInput>
             <mat-error>Invalid url</mat-error>
         </mat-form-field>
-        <button [disabled]="newContactFormGroup.invalid" mat-raised-button color="primary">Submit</button>
+        <button mat-raised-button color="primary" [disabled]="newContactFormGroup.invalid ||  isModified===false">
+            Submit
+        </button>
     </form>
 </div>
