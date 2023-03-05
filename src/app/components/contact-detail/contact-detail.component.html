@@ -2,5 +2,10 @@
     <mat-icon>keyboard_arrow_left</mat-icon>Back to dashboard
 </button>
 
+<button mat-raised-button (click)="cancelChanges()">
+    <mat-icon>cached</mat-icon>&nbsp;Cancel changes
+</button>
+
+
 <h1 class="small-margin-top">Contact details</h1>
 <app-contact-form [contactToEdit]="contactDetails"></app-contact-form>

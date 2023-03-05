@@ -26,6 +26,10 @@ export class ContactDetailComponent implements OnInit, OnDestroy {
     this.route.navigateByUrl('dashboard');
   }
 
+  cancelChanges() {
+    if (this.contactDetails) this.contactDetails = { ...this.contactDetails };
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

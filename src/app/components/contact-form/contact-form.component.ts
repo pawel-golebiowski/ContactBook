@@ -54,6 +54,7 @@ export class ContactFormComponent implements OnInit, OnChanges, OnDestroy {
         this.lastNameFormControl.setValue(this.contactToEdit.lastName);
         this.birthdayFormControl.setValue(this.contactToEdit.birthday);
         this.pictureUrlFormControl.setValue(this.contactToEdit.pictureUrl);
+        this.isModified = false;
       }
     }
   }

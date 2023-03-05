@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           if (this.firstContactsArrival) {
             this.dataSource.data = this.contactListRef;
             this.firstContactsArrival = false;
-          }
+          } else this._filterContacts();
         }
       )
     );
@@ -86,16 +86,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   initFilterFormGroup() {
     this.subscribtion.add(
-      this.filterFormGroup.valueChanges.subscribe(() => {
-        this.dataSource.data = this.contactListRef
-          .filter((contact) =>
-            contact.firstName.includes(this.firstNameFilterFormControl.value)
-          )
-          .filter((contact) =>
-            contact.lastName.includes(this.lastNameFilterFormControl.value)
-          );
-      })
+      this.filterFormGroup.valueChanges.subscribe(() => this._filterContacts())
     );
+  }
+
+  private _filterContacts() {
+    this.dataSource.data = this.contactListRef
+      .filter((contact) =>
+        contact.firstName.includes(this.firstNameFilterFormControl.value)
+      )
+      .filter((contact) =>
+        contact.lastName.includes(this.lastNameFilterFormControl.value)
+      );
   }
 
   ngOnDestroy(): void {
